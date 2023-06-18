@@ -37,7 +37,13 @@ app.get('/strings/first-characters/:string', (req, res) => {
 });
 
 app.get('/numbers/add/:a/and/:b', (req, res) => {
-  res.status(200).json({ result: add(parseInt(req.params.a), parseInt(req.params.b)) });
+  const a = parseInt(req.params.a);
+  const b = parseInt(req.params.b);
+  if (!isNaN(a) & !isNaN(b)) {
+    res.status(200).json({ result: add(a, b) });
+  } else {
+    res.status(400).json({ error: 'Parameters must be valid numbers.' });
+  }
 });
 
 module.exports = app;
