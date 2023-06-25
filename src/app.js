@@ -53,7 +53,7 @@ app.get('/numbers/subtract/:b/from/:a', (req, res) => {
   const a = parseInt(req.params.a);
   const b = parseInt(req.params.b);
 
-  if (!isNaN(a) && !isNaN(b)) {
+  if (!Number.isNaN(a) && !Number.isNaN(b)) {
     return res.status(200).json({ result: subtract(a, b) });
   } else {
     return res.status(400).json({ error: 'Parameters must be valid numbers.' });
@@ -100,6 +100,34 @@ app.post('/numbers/remainder', (req, res) => {
     return res.status(400).json({ error: 'Unable to divide by 0.' });
   } else {
     return res.status(200).json({ result: remainder(a, b) });
+  }
+});
+
+app.post('/booleans/negate', (req, res) => {
+  return res.status(200).json({ result: negate(req.body.value) });
+});
+
+app.post('/booleans/truthiness', (req, res) => {
+  return res.status(200).json({ result: truthiness(req.body.value) });
+});
+
+app.get('/booleans/is-odd/:a', (req, res) => {
+  const a = parseInt(req.params.a);
+
+  if (Number.isNaN(a)) {
+    return res.status(400).json({ error: 'Parameter must be a number.' });
+  } else {
+    return res.status(200).json({ result: isOdd(a) });
+  }
+});
+
+app.get('/booleans/:string/starts-with/:character', (req, res) => {
+  const { string, character } = req.params;
+
+  if (character.length > 1) {
+    return res.status(400).json({ error: 'Parameter "character" must be a single character.' });
+  } else {
+    return res.status(200).json({ result: startsWith(character, string) });
   }
 });
 
