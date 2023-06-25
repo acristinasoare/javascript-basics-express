@@ -152,6 +152,7 @@ app.post('/arrays/to-string', (req, res) => {
 
 app.post('/arrays/append', (req, res) => {
   const { array, value } = req.body;
+
   return res.status(200).json({ result: addToArray2(value, array) });
 });
 
